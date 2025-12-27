@@ -7,10 +7,12 @@ import Header from '../../components/header/header';
 export default function FavoritesPage(): JSX.Element {
   const favoriteOffers = useAppSelector((state) => state.offers.favoriteOffers);
 
+  const isEmpty = favoriteOffers && favoriteOffers.length === 0;
+
   return (
-    <div className="page">
+    <div className={'page' + (isEmpty ? ' page--favorites-empty' : '')}>
       <Header />
-      <main className="page__main page__main--favorites">
+      <main className={'page__main page__main--favorites' + (isEmpty ? ' page__main--favorites-empty' : '')}>
         <div className="page__favorites-container container">
           <FavoritePlaceCardList offers={favoriteOffers} />
         </div>
