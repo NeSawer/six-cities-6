@@ -7,6 +7,7 @@ import { dropToken, saveToken } from '../../services/token';
 import { RegistrationRequest } from '../../models/registration-request';
 import { AxiosInstance } from 'axios';
 import { fetchFavoriteOffers } from './offers';
+import { ApiRoute } from '../../configuration/api-route';
 
 export type AuthState = {
   authStatus: AuthorizationStatus;
@@ -27,7 +28,7 @@ export const setCurrentUser = createAction<UserModel | null>('set_current_user')
 
 export const fetchLogin = createAsyncThunk<void, undefined, AsyncThunkConfig>(
   'fetch_login', (_arg, { dispatch, extra: api }) => handleRequest(
-    () => api.get<UserModel>('login'),
+    () => api.get<UserModel>(ApiRoute.Login),
     (data) => {
       dispatch(setCurrentUser(data));
       saveToken(data.token);
@@ -42,7 +43,7 @@ export const fetchLogin = createAsyncThunk<void, undefined, AsyncThunkConfig>(
 
 export const fetchRegistration = createAsyncThunk<void, RegistrationRequest, AsyncThunkConfig>(
   'fetch_registration', (arg, { dispatch, extra: api }) => handleRequest(
-    () => api.post<UserModel>('login', arg),
+    () => api.post<UserModel>(ApiRoute.Login, arg),
     (data) => {
       dispatch(setCurrentUser(data));
       saveToken(data.token);
@@ -57,7 +58,7 @@ export const fetchRegistration = createAsyncThunk<void, RegistrationRequest, Asy
 
 export const fetchLogout = createAsyncThunk<void, undefined, AsyncThunkConfig>(
   'fetch_logout', (_arg, { dispatch, extra: api }) => handleRequest(
-    () => api.delete('logout'),
+    () => api.delete(ApiRoute.Logout),
     () => {
       dispatch(setCurrentUser(null));
       dropToken();

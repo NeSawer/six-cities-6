@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
-import { AppRoute } from '../../app-route';
+import { AppRoute } from '../../configuration/app-route';
 import Offer from '../../components/offer/offer';
 import Header from '../../components/header/header';
 import { OfferModel } from '../../models/offer-model';
@@ -10,6 +10,7 @@ import { appApi } from '../../api/api';
 import handleRequest from '../../tools/handle-request';
 import Loader from '../../components/loader/loader';
 import { useAppSelector } from '../../hooks/use-app-selector';
+import { ApiRoute } from '../../configuration/api-route';
 
 export default function OfferPage(): JSX.Element {
   const { id } = useParams<{ id: string }>();
@@ -20,13 +21,13 @@ export default function OfferPage(): JSX.Element {
   const [nearbyOffers, setNearbyOffers] = useState<OfferShortModel[] | null>();
 
   useAsyncEffect((signal) => handleRequest(
-    () => appApi.get<OfferModel>(`offers/${id}`, { signal }),
+    () => appApi.get<OfferModel>(`${ApiRoute.Offers}/${id}`, { signal }),
     setOffer,
     { [404]: () => setOffer(null) }
   ), [id]);
 
   useAsyncEffect((signal) => handleRequest(
-    () => appApi.get<OfferShortModel[]>(`offers/${id}/nearby`, { signal }),
+    () => appApi.get<OfferShortModel[]>(`${ApiRoute.Offers}/${id}/${ApiRoute.Nearby}`, { signal }),
     setNearbyOffers,
     { [404]: () => setNearbyOffers(null) }
   ), [id]);

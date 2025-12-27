@@ -1,5 +1,5 @@
 import { Link, Navigate } from 'react-router-dom';
-import { AppRoute } from '../../app-route';
+import { AppRoute } from '../../configuration/app-route';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { AuthorizationStatus } from '../../models/authorization-status';
 import { useMemo, useState } from 'react';

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../app-route';
+import { AppRoute } from '../../configuration/app-route';
 import Header from '../../components/header/header';
 
 export default function NotFoundPage(): JSX.Element {

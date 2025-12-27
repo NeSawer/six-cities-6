@@ -13,7 +13,7 @@ import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { AuthorizationStatus } from '../../models/authorization-status';
 import { useNavigate } from 'react-router-dom';
-import { AppRoute } from '../../app-route';
+import { AppRoute } from '../../configuration/app-route';
 
 type Props = {
   offer: OfferModel;

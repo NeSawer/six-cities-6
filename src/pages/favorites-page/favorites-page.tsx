@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/use-app-selector';
-import { AppRoute } from '../../app-route';
+import { AppRoute } from '../../configuration/app-route';
 import FavoritePlaceCardList from '../../components/place-card/favorite-place-card-list';
 import Header from '../../components/header/header';
 

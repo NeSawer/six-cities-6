@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import { AppRoute } from '../../app-route';
+import { AppRoute } from '../../configuration/app-route';
 import { AuthorizationStatus } from '../../models/authorization-status';
 import { useAppSelector } from '../../hooks/use-app-selector';
 

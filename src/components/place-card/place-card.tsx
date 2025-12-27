@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { AppRoute } from '../../app-route';
+import { AppRoute } from '../../configuration/app-route';
 import { OfferShortModel } from '../../models/offer-short-model';
 import withPrevent from '../../tools/with-prevent';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';

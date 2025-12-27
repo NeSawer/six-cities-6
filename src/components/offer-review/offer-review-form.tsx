@@ -3,6 +3,7 @@ import withPrevent from '../../tools/with-prevent';
 import handleRequest from '../../tools/handle-request';
 import { appApi } from '../../api/api';
 import { ReviewModel } from '../../models/review-model';
+import { ApiRoute } from '../../configuration/api-route';
 
 type Props = {
   offerId: string;
@@ -27,7 +28,7 @@ export default function OfferReviewForm({ offerId, onPostComment }: Props): JSX.
   const postComment = () => {
     setSubmitStatus({ isInProgress: true, isError: false });
     handleRequest(
-      () => appApi.post<ReviewModel>(`comments/${offerId}`, formState),
+      () => appApi.post<ReviewModel>(`${ApiRoute.Comments}/${offerId}`, formState),
       (comment) => {
         onPostComment(comment);
         setFormState({ rating: 0, comment: '' });

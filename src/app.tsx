@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useAppDispatch } from './hooks/use-app-dispatch';
-import { AppRoute } from './app-route';
+import { AppRoute } from './configuration/app-route';
 import PrivateRoute from './components/private-route/private-route';
 import MainPage from './pages/main-page/main-page';
 import LoginPage from './pages/login-page/login-page';

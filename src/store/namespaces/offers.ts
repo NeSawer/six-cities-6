@@ -5,6 +5,7 @@ import cities from '../../mocks/cities';
 import { OfferShortModel } from '../../models/offer-short-model';
 import { CityModel } from '../../models/city';
 import { AxiosInstance } from 'axios';
+import { ApiRoute } from '../../configuration/api-route';
 
 export type OffersState = {
   selectedCity: CityModel;
@@ -30,7 +31,7 @@ export const updateFavoriteOffer = createAction<OfferShortModel>('update_favorit
 export const fetchOffers = createAsyncThunk<void, undefined, AsyncThunkConfig>(
   'fetch_offers',
   async (_arg, { dispatch, extra: api }) => handleRequest(
-    () => api.get<OfferShortModel[]>('offers'),
+    () => api.get<OfferShortModel[]>(ApiRoute.Offers),
     (data) => dispatch(setOffers(data)),
     {},
     () => dispatch(setOffers([]))
@@ -39,7 +40,7 @@ export const fetchOffers = createAsyncThunk<void, undefined, AsyncThunkConfig>(
 export const fetchFavoriteOffers = createAsyncThunk<void, undefined, AsyncThunkConfig>(
   'fetch_favorite_offers',
   async (_arg, { dispatch, extra: api }) => handleRequest(
-    () => api.get<OfferShortModel[]>('favorite'),
+    () => api.get<OfferShortModel[]>(ApiRoute.Favorite),
     (data) => dispatch(setFavoriteOffers(data)),
     {},
     () => dispatch(setFavoriteOffers([]))
@@ -48,7 +49,7 @@ export const fetchFavoriteOffers = createAsyncThunk<void, undefined, AsyncThunkC
 export const fetchUpdateFavoriteOffer = createAsyncThunk<void, { offerId: string; isFavorite: boolean }, AsyncThunkConfig>(
   'fetch_update_favorite_offer',
   async (arg, { dispatch, extra: api }) => handleRequest(
-    () => api.post<OfferShortModel>(`favorite/${arg.offerId}/${arg.isFavorite ? 1 : 0}`),
+    () => api.post<OfferShortModel>(`${ApiRoute.Favorite}/${arg.offerId}/${arg.isFavorite ? 1 : 0}`),
     (data) => dispatch(updateFavoriteOffer(data))
   ));
 
