@@ -53,7 +53,7 @@ export default function Offer({ offer, nearbyOffers }: Props): JSX.Element {
       <section className="offer">
         <div className="offer__gallery-container container">
           <div className="offer__gallery">
-            {offer.images.map((url) => (
+            {offer.images.slice(0, 6).map((url) => (
               <div key={url} className="offer__image-wrapper">
                 <img
                   className="offer__image"
