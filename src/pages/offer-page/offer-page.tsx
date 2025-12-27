@@ -11,11 +11,12 @@ import handleRequest from '../../tools/handle-request';
 import Loader from '../../components/loader/loader';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { ApiRoute } from '../../configuration/api-route';
+import { getFavoriteOffers } from '../../store/offers';
 
 export default function OfferPage(): JSX.Element {
   const { id } = useParams<{ id: string }>();
 
-  const favoriteOffers = useAppSelector((state) => state.offers.favoriteOffers);
+  const favoriteOffers = useAppSelector(getFavoriteOffers);
 
   const [offer, setOffer] = useState<OfferModel | null>();
   const [nearbyOffers, setNearbyOffers] = useState<OfferShortModel[] | null>();

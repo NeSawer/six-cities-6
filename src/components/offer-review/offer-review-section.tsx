@@ -9,13 +9,14 @@ import Loader from '../loader/loader';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { AuthorizationStatus } from '../../models/authorization-status';
 import { ApiRoute } from '../../configuration/api-route';
+import { getAuthStatus } from '../../store/auth';
 
 type Props = {
   offerId: string;
 }
 
 export default function OfferReviewSection({ offerId }: Props): JSX.Element {
-  const authStatus = useAppSelector((state) => state.auth.authStatus);
+  const authStatus = useAppSelector(getAuthStatus);
 
   const [comments, setComments] = useState<ReviewModel[] | null>();
 

@@ -14,6 +14,7 @@ import { useAppSelector } from '../../hooks/use-app-selector';
 import { AuthorizationStatus } from '../../models/authorization-status';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../configuration/app-route';
+import { getAuthStatus } from '../../store/auth';
 
 type Props = {
   offer: OfferModel;
@@ -23,7 +24,7 @@ type Props = {
 export default function Offer({ offer, nearbyOffers }: Props): JSX.Element {
   const navigate = useNavigate();
 
-  const authStatus = useAppSelector((state) => state.auth.authStatus);
+  const authStatus = useAppSelector(getAuthStatus);
   const dispatch = useAppDispatch();
   const limitedNearbyOffers = nearbyOffers?.slice(0, Settings.NEARBY_OFFERS_LIMIT);
 

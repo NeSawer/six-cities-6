@@ -6,6 +6,7 @@ import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { fetchUpdateFavoriteOffer } from '../../store/offers';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { AuthorizationStatus } from '../../models/authorization-status';
+import { getAuthStatus } from '../../store/auth';
 
 type Props = {
   variant: 'city' | 'favorite' | 'nearby';
@@ -17,7 +18,7 @@ type Props = {
 export default function PlaceCard({ variant, model, onMouseEnter, onMouseLeave }: Props): JSX.Element {
   const navigate = useNavigate();
 
-  const authStatus = useAppSelector((state) => state.auth.authStatus);
+  const authStatus = useAppSelector(getAuthStatus);
   const dispatch = useAppDispatch();
 
   const variantClass = {

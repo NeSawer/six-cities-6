@@ -8,6 +8,7 @@ import { RegistrationRequest } from '../models/registration-request';
 import { AxiosInstance } from 'axios';
 import { fetchFavoriteOffers } from './offers';
 import { ApiRoute } from '../configuration/api-route';
+import { State } from '.';
 
 export type AuthState = {
   authStatus: AuthorizationStatus;
@@ -22,6 +23,9 @@ const initialState: AuthState = {
 type AsyncThunkConfig = {
   extra: AxiosInstance;
 }
+
+export const getAuthStatus = (state: Pick<State, Namespace.Auth>) => state[Namespace.Auth].authStatus;
+export const getCurrentUser = (state: Pick<State, Namespace.Auth>) => state[Namespace.Auth].currentUser;
 
 export const setAuthStatus = createAction<AuthorizationStatus>('set_auth_status');
 export const setCurrentUser = createAction<UserModel | null>('set_current_user');

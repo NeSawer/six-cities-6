@@ -6,6 +6,7 @@ import { OfferShortModel } from '../models/offer-short-model';
 import { CityModel } from '../models/city';
 import { AxiosInstance } from 'axios';
 import { ApiRoute } from '../configuration/api-route';
+import { State } from '.';
 
 export type OffersState = {
   selectedCity: CityModel;
@@ -22,6 +23,10 @@ const initialState: OffersState = {
 type AsyncThunkConfig = {
   extra: AxiosInstance;
 }
+
+export const getSelectedCity = (state: Pick<State, Namespace.Offers>) => state[Namespace.Offers].selectedCity;
+export const getOffers = (state: Pick<State, Namespace.Offers>) => state[Namespace.Offers].offers;
+export const getFavoriteOffers = (state: Pick<State, Namespace.Offers>) => state[Namespace.Offers].favoriteOffers;
 
 export const selectCity = createAction<CityModel>('select_city');
 export const setOffers = createAction<OfferShortModel[] | null>('set_offers');

@@ -6,11 +6,11 @@ import MainPlaceCardList from '../../components/place-card/main-place-card-list'
 import Map from '../../components/map/map';
 import cities from '../../mocks/cities';
 import Header from '../../components/header/header';
-import { selectCity } from '../../store/offers';
+import { getOffers, getSelectedCity, selectCity } from '../../store/offers';
 
 export default function MainPage(): JSX.Element {
-  const selectedCity = useAppSelector((state) => state.offers.selectedCity);
-  const offers = useAppSelector((state) => state.offers.offers);
+  const selectedCity = useAppSelector(getSelectedCity);
+  const offers = useAppSelector(getOffers);
   const dispatch = useAppDispatch();
 
   const [activeOfferId, setActiveOfferId] = useState<string>();

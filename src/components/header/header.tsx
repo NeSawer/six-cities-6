@@ -4,12 +4,13 @@ import { useAppSelector } from '../../hooks/use-app-selector';
 import { AuthorizationStatus } from '../../models/authorization-status';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import withPrevent from '../../tools/with-prevent';
-import { fetchLogout } from '../../store/auth';
+import { fetchLogout, getAuthStatus, getCurrentUser } from '../../store/auth';
+import { getFavoriteOffers } from '../../store/offers';
 
 export default function Header(): JSX.Element {
-  const authStatus = useAppSelector((state) => state.auth.authStatus);
-  const currentUser = useAppSelector((state) => state.auth.currentUser);
-  const favoriteOffers = useAppSelector((state) => state.offers.favoriteOffers);
+  const authStatus = useAppSelector(getAuthStatus);
+  const currentUser = useAppSelector(getCurrentUser);
+  const favoriteOffers = useAppSelector(getFavoriteOffers);
   const dispatch = useAppDispatch();
 
   const isAuth = authStatus === AuthorizationStatus.Auth && currentUser;

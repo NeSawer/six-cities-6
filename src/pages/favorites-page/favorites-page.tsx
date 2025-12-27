@@ -3,9 +3,10 @@ import { useAppSelector } from '../../hooks/use-app-selector';
 import { AppRoute } from '../../configuration/app-route';
 import FavoritePlaceCardList from '../../components/place-card/favorite-place-card-list';
 import Header from '../../components/header/header';
+import { getFavoriteOffers } from '../../store/offers';
 
 export default function FavoritesPage(): JSX.Element {
-  const favoriteOffers = useAppSelector((state) => state.offers.favoriteOffers);
+  const favoriteOffers = useAppSelector(getFavoriteOffers);
 
   const isEmpty = favoriteOffers && favoriteOffers.length === 0;
 
