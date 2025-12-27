@@ -93,12 +93,12 @@ export default function Offer({ offer, nearbyOffers }: Props): JSX.Element {
               <span className="offer__rating-value rating__value">{offer.rating}</span>
             </div>
             <ul className="offer__features">
-              <li className="offer__feature offer__feature--entire">{offer.type}</li>
+              <li className="offer__feature offer__feature--entire">{offer.type[0].toUpperCase()}{offer.type.slice(1)}</li>
               <li className="offer__feature offer__feature--bedrooms">
-                {offer.bedrooms} Bedrooms
+                {offer.bedrooms} Bedroom{offer.bedrooms > 1 ? 's' : ''}
               </li>
               <li className="offer__feature offer__feature--adults">
-                Max {offer.maxAdults} adults
+                Max {offer.maxAdults} adult{offer.maxAdults > 1 ? 's' : ''}
               </li>
             </ul>
             <div className="offer__price">
