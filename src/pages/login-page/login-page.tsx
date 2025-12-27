@@ -2,10 +2,12 @@ import { Link, Navigate } from 'react-router-dom';
 import { AppRoute } from '../../app-route';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { AuthorizationStatus } from '../../models/authorization-status';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import withPrevent from '../../tools/with-prevent';
 import { fetchRegistration } from '../../store/namespaces/auth';
+import cities from '../../mocks/cities';
+import { selectCity } from '../../store/namespaces/offers';
 
 export default function LoginPage(): JSX.Element {
   const authStatus = useAppSelector((state) => state.auth.authStatus);
@@ -15,6 +17,8 @@ export default function LoginPage(): JSX.Element {
     email: '',
     password: ''
   });
+
+  const randomCity = useMemo(() => cities[Math.floor(Math.random() * cities.length)], []);
 
   if (authStatus === AuthorizationStatus.Auth) {
     return <Navigate to={AppRoute.Root} />;
@@ -78,9 +82,9 @@ export default function LoginPage(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
-              </a>
+              <Link className="locations__item-link" to={AppRoute.Root} onClick={() => dispatch(selectCity(randomCity))}>
+                <span>{randomCity.name}</span>
+              </Link>
             </div>
           </section>
         </div>
