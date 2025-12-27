@@ -6,7 +6,7 @@ import { OfferShortModel } from '../../models/offer-short-model';
 import Map from '../map/map';
 import Loader from '../loader/loader';
 import { LocationModel } from '../../models/location-model';
-import { Setting } from '../../configuration/consts';
+import { Settings } from '../../configuration/settings';
 import withPrevent from '../../tools/with-prevent';
 import { fetchUpdateFavoriteOffer } from '../../store/namespaces/offers';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
@@ -25,7 +25,7 @@ export default function Offer({ offer, nearbyOffers }: Props): JSX.Element {
 
   const authStatus = useAppSelector((state) => state.auth.authStatus);
   const dispatch = useAppDispatch();
-  const limitedNearbyOffers = nearbyOffers?.slice(0, Setting.NEARBY_OFFERS_LIMIT);
+  const limitedNearbyOffers = nearbyOffers?.slice(0, Settings.NEARBY_OFFERS_LIMIT);
 
   const offerLocations: [string, LocationModel][] = useMemo(
     () => {
@@ -53,7 +53,7 @@ export default function Offer({ offer, nearbyOffers }: Props): JSX.Element {
       <section className="offer">
         <div className="offer__gallery-container container">
           <div className="offer__gallery">
-            {offer.images.slice(0, 6).map((url) => (
+            {offer.images.slice(0, Settings.OFFER_MAX_IMAGES).map((url) => (
               <div key={url} className="offer__image-wrapper">
                 <img
                   className="offer__image"

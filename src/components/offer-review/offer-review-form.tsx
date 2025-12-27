@@ -4,6 +4,7 @@ import handleRequest from '../../tools/handle-request';
 import { appApi } from '../../api/api';
 import { ReviewModel } from '../../models/review-model';
 import { ApiRoute } from '../../configuration/api-route';
+import { Settings } from '../../configuration/settings';
 
 type Props = {
   offerId: string;
@@ -22,8 +23,8 @@ export default function OfferReviewForm({ offerId, onPostComment }: Props): JSX.
 
   const allowed = !sumbitStatus.isInProgress
     && formState.rating
-    && formState.comment.length >= 50
-    && formState.comment.length <= 300;
+    && formState.comment.length >= Settings.OFFER_REVIEW.COMMENT_MIN_LENGTH
+    && formState.comment.length <= Settings.OFFER_REVIEW.COMMENT_MAX_LENGTH;
 
   const postComment = () => {
     setSubmitStatus({ isInProgress: true, isError: false });
@@ -155,7 +156,7 @@ export default function OfferReviewForm({ offerId, onPostComment }: Props): JSX.
           To submit review please make sure to set{' '}
           <span className="reviews__star">rating</span> and describe
           your stay with at least{' '}
-          <b className="reviews__text-amount">50 characters</b>.
+          <b className="reviews__text-amount">{Settings.OFFER_REVIEW.COMMENT_MIN_LENGTH} characters</b>.
         </p>
         <button
           className="reviews__submit form__submit button"
