@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import prevented from '../../tools/prevented';
+import withPrevent from '../../tools/with-prevent';
 import handleRequest from '../../tools/handle-request';
 import { appApi } from '../../api/api';
 import { ReviewModel } from '../../models/review-model';
@@ -23,7 +23,7 @@ export default function OfferReviewForm({ offerId, onPostComment }: Props): JSX.
   );
 
   return (
-    <form className="reviews__form form" onSubmit={prevented(postComment)}>
+    <form className="reviews__form form" onSubmit={withPrevent(postComment)}>
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>

@@ -7,7 +7,7 @@ import Map from '../map/map';
 import Loader from '../loader/loader';
 import { LocationModel } from '../../models/location-model';
 import { Setting } from '../../configuration/consts';
-import prevented from '../../tools/prevented';
+import withPrevent from '../../tools/with-prevent';
 import { fetchUpdateFavoriteOffer } from '../../store/namespaces/offers';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useAppSelector } from '../../hooks/use-app-selector';
@@ -77,7 +77,7 @@ export default function Offer({ offer, nearbyOffers }: Props): JSX.Element {
               <button
                 className={`offer__bookmark-button ${offer.isFavorite ? 'offer__bookmark-button--active ' : ''}button`}
                 type="button"
-                onClick={prevented(bookmarkOnClick)}
+                onClick={withPrevent(bookmarkOnClick)}
               >
                 <svg className="offer__bookmark-icon" width={31} height={33}>
                   <use xlinkHref="#icon-bookmark" />

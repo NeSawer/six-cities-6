@@ -1,6 +1,6 @@
 import { BaseSyntheticEvent } from 'react';
 
-export default function prevented<TEvent extends BaseSyntheticEvent>(
+export default function withPrevent<TEvent extends BaseSyntheticEvent>(
   next: (e: TEvent) => unknown) {
   return (e: TEvent) => {
     e.preventDefault();

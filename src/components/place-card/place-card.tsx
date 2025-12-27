@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../app-route';
 import { OfferShortModel } from '../../models/offer-short-model';
-import prevented from '../../tools/prevented';
+import withPrevent from '../../tools/with-prevent';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { fetchUpdateFavoriteOffer } from '../../store/namespaces/offers';
 import { useAppSelector } from '../../hooks/use-app-selector';
@@ -64,7 +64,7 @@ export default function PlaceCard({ variant, model, onMouseEnter, onMouseLeave }
           <button
             className={`place-card__bookmark-button ${model.isFavorite ? 'place-card__bookmark-button--active ' : ''}button`}
             type="button"
-            onClick={prevented(bookmarkOnClick)}
+            onClick={withPrevent(bookmarkOnClick)}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>

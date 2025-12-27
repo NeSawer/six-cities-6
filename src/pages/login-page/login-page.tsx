@@ -4,7 +4,7 @@ import { useAppSelector } from '../../hooks/use-app-selector';
 import { AuthorizationStatus } from '../../models/authorization-status';
 import { useState } from 'react';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
-import prevented from '../../tools/prevented';
+import withPrevent from '../../tools/with-prevent';
 import { fetchRegistration } from '../../store/namespaces/auth';
 
 export default function LoginPage(): JSX.Element {
@@ -42,7 +42,7 @@ export default function LoginPage(): JSX.Element {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form className="login__form form" onSubmit={prevented(() => dispatch(fetchRegistration(formState)))}>
+            <form className="login__form form" onSubmit={withPrevent(() => dispatch(fetchRegistration(formState)))}>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input

@@ -3,7 +3,7 @@ import { AppRoute } from '../../app-route';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { AuthorizationStatus } from '../../models/authorization-status';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
-import prevented from '../../tools/prevented';
+import withPrevent from '../../tools/with-prevent';
 import { fetchLogout } from '../../store/namespaces/auth';
 
 export default function Header(): JSX.Element {
@@ -42,7 +42,7 @@ export default function Header(): JSX.Element {
               </li>
               {isAuth &&
                 <li className="header__nav-item">
-                  <a className="header__nav-link" onClick={prevented(() => dispatch(fetchLogout()))}>
+                  <a className="header__nav-link" onClick={withPrevent(() => dispatch(fetchLogout()))}>
                     <span className="header__signout">Sign out</span>
                   </a>
                 </li>}
