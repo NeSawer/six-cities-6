@@ -19,7 +19,10 @@ export default function OfferReviewForm({ offerId, onPostComment }: Props): JSX.
 
   const postComment = () => handleRequest(
     () => appApi.post<ReviewModel>(`comments/${offerId}`, formState),
-    onPostComment
+    (comment) => {
+      onPostComment(comment);
+      setFormState({ rating: 0, comment: '' })
+    }
   );
 
   return (
