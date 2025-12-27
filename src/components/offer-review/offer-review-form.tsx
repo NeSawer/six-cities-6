@@ -165,7 +165,7 @@ export default function OfferReviewForm({ offerId, onPostComment }: Props): JSX.
         </button>
       </div>
       {sumbitStatus.isError &&
-        <p className="reviews__help" style={{ color: "red" }}>
+        <p className="reviews__help" style={{ color: 'red' }}>
           An error occurred while submitting. Please try again later
         </p>}
     </form>
