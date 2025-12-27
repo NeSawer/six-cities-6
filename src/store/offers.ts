@@ -1,11 +1,11 @@
 import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { Namespace } from '../namespace';
-import handleRequest from '../../tools/handle-request';
-import cities from '../../mocks/cities';
-import { OfferShortModel } from '../../models/offer-short-model';
-import { CityModel } from '../../models/city';
+import { Namespace } from './namespace';
+import handleRequest from '../tools/handle-request';
+import cities from '../mocks/cities';
+import { OfferShortModel } from '../models/offer-short-model';
+import { CityModel } from '../models/city';
 import { AxiosInstance } from 'axios';
-import { ApiRoute } from '../../configuration/api-route';
+import { ApiRoute } from '../configuration/api-route';
 
 export type OffersState = {
   selectedCity: CityModel;

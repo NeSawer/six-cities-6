@@ -4,7 +4,7 @@ import { useAppSelector } from '../../hooks/use-app-selector';
 import { AuthorizationStatus } from '../../models/authorization-status';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import withPrevent from '../../tools/with-prevent';
-import { fetchLogout } from '../../store/namespaces/auth';
+import { fetchLogout } from '../../store/auth';
 
 export default function Header(): JSX.Element {
   const authStatus = useAppSelector((state) => state.auth.authStatus);

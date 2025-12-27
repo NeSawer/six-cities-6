@@ -6,7 +6,7 @@ import MainPlaceCardList from '../../components/place-card/main-place-card-list'
 import Map from '../../components/map/map';
 import cities from '../../mocks/cities';
 import Header from '../../components/header/header';
-import { selectCity } from '../../store/namespaces/offers';
+import { selectCity } from '../../store/offers';
 
 export default function MainPage(): JSX.Element {
   const selectedCity = useAppSelector((state) => state.offers.selectedCity);

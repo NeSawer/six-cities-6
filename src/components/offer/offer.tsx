@@ -8,7 +8,7 @@ import Loader from '../loader/loader';
 import { LocationModel } from '../../models/location-model';
 import { Settings } from '../../configuration/settings';
 import withPrevent from '../../tools/with-prevent';
-import { fetchUpdateFavoriteOffer } from '../../store/namespaces/offers';
+import { fetchUpdateFavoriteOffer } from '../../store/offers';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { AuthorizationStatus } from '../../models/authorization-status';

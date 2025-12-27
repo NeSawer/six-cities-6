@@ -5,9 +5,9 @@ import { AuthorizationStatus } from '../../models/authorization-status';
 import { useMemo, useState } from 'react';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import withPrevent from '../../tools/with-prevent';
-import { fetchRegistration } from '../../store/namespaces/auth';
+import { fetchRegistration } from '../../store/auth';
 import cities from '../../mocks/cities';
-import { selectCity } from '../../store/namespaces/offers';
+import { selectCity } from '../../store/offers';
 
 export default function LoginPage(): JSX.Element {
   const authStatus = useAppSelector((state) => state.auth.authStatus);
