@@ -28,13 +28,13 @@ export const getSelectedCity = (state: Pick<State, Namespace.Offers>) => state[N
 export const getOffers = (state: Pick<State, Namespace.Offers>) => state[Namespace.Offers].offers;
 export const getFavoriteOffers = (state: Pick<State, Namespace.Offers>) => state[Namespace.Offers].favoriteOffers;
 
-export const selectCity = createAction<CityModel>('select_city');
-export const setOffers = createAction<OfferShortModel[] | null>('set_offers');
-export const setFavoriteOffers = createAction<OfferShortModel[] | null>('set_favorite_offers');
-export const updateFavoriteOffer = createAction<OfferShortModel>('update_favorite_offer');
+export const selectCity = createAction<CityModel>('selectCity');
+export const setOffers = createAction<OfferShortModel[] | null>('setOffers');
+export const setFavoriteOffers = createAction<OfferShortModel[] | null>('setFavoriteOffers');
+export const updateFavoriteOffer = createAction<OfferShortModel>('updateFavoriteOffer');
 
 export const fetchOffers = createAsyncThunk<void, undefined, AsyncThunkConfig>(
-  'fetch_offers',
+  'fetchOffers',
   async (_arg, { dispatch, extra: api }) => handleRequest(
     () => api.get<OfferShortModel[]>(ApiRoute.Offers),
     (data) => dispatch(setOffers(data)),
@@ -43,7 +43,7 @@ export const fetchOffers = createAsyncThunk<void, undefined, AsyncThunkConfig>(
   ));
 
 export const fetchFavoriteOffers = createAsyncThunk<void, undefined, AsyncThunkConfig>(
-  'fetch_favorite_offers',
+  'fetchFavoriteOffers',
   async (_arg, { dispatch, extra: api }) => handleRequest(
     () => api.get<OfferShortModel[]>(ApiRoute.Favorite),
     (data) => dispatch(setFavoriteOffers(data)),
@@ -52,7 +52,7 @@ export const fetchFavoriteOffers = createAsyncThunk<void, undefined, AsyncThunkC
   ));
 
 export const fetchUpdateFavoriteOffer = createAsyncThunk<void, { offerId: string; isFavorite: boolean }, AsyncThunkConfig>(
-  'fetch_update_favorite_offer',
+  'fetchUpdateFavoriteOffer',
   async (arg, { dispatch, extra: api }) => handleRequest(
     () => api.post<OfferShortModel>(`${ApiRoute.Favorite}/${arg.offerId}/${arg.isFavorite ? 1 : 0}`),
     (data) => dispatch(updateFavoriteOffer(data))

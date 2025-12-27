@@ -27,11 +27,11 @@ type AsyncThunkConfig = {
 export const getAuthStatus = (state: Pick<State, Namespace.Auth>) => state[Namespace.Auth].authStatus;
 export const getCurrentUser = (state: Pick<State, Namespace.Auth>) => state[Namespace.Auth].currentUser;
 
-export const setAuthStatus = createAction<AuthorizationStatus>('set_auth_status');
-export const setCurrentUser = createAction<UserModel | null>('set_current_user');
+export const setAuthStatus = createAction<AuthorizationStatus>('setAuthStatus');
+export const setCurrentUser = createAction<UserModel | null>('setCurrentUser');
 
 export const fetchLogin = createAsyncThunk<void, undefined, AsyncThunkConfig>(
-  'fetch_login', (_arg, { dispatch, extra: api }) => handleRequest(
+  'fetchLogin', (_arg, { dispatch, extra: api }) => handleRequest(
     () => api.get<UserModel>(ApiRoute.Login),
     (data) => {
       dispatch(setCurrentUser(data));
@@ -46,7 +46,7 @@ export const fetchLogin = createAsyncThunk<void, undefined, AsyncThunkConfig>(
   ));
 
 export const fetchRegistration = createAsyncThunk<void, RegistrationRequest, AsyncThunkConfig>(
-  'fetch_registration', (arg, { dispatch, extra: api }) => handleRequest(
+  'fetchRegistration', (arg, { dispatch, extra: api }) => handleRequest(
     () => api.post<UserModel>(ApiRoute.Login, arg),
     (data) => {
       dispatch(setCurrentUser(data));
@@ -61,7 +61,7 @@ export const fetchRegistration = createAsyncThunk<void, RegistrationRequest, Asy
   ));
 
 export const fetchLogout = createAsyncThunk<void, undefined, AsyncThunkConfig>(
-  'fetch_logout', (_arg, { dispatch, extra: api }) => handleRequest(
+  'fetchLogout', (_arg, { dispatch, extra: api }) => handleRequest(
     () => api.delete(ApiRoute.Logout),
     () => {
       dispatch(setCurrentUser(null));
