@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import withPrevent from '../../tools/with-prevent';
 import handleRequest from '../../tools/handle-request';
 import { appApi } from '../../api/api';
@@ -56,7 +56,7 @@ export default function OfferReviewForm({ offerId, onPostComment }: Props): JSX.
       </label>
       <div className="reviews__rating-form form__rating">
         {STARS.map((star, index) => (
-          <>
+          <Fragment key={star}>
             <input
               className="form__rating-input visually-hidden"
               name="rating"
@@ -76,7 +76,7 @@ export default function OfferReviewForm({ offerId, onPostComment }: Props): JSX.
                 <use xlinkHref="#icon-star" />
               </svg>
             </label>
-          </>
+          </Fragment>
         ))}
       </div>
       <textarea
