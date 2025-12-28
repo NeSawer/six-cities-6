@@ -8,18 +8,20 @@ import OfferReviewList from './offer-review-list';
 import Loader from '../loader/loader';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { AuthorizationStatus } from '../../models/authorization-status';
+import { ApiRoute } from '../../configuration/api-route';
+import { getAuthStatus } from '../../store/auth/auth';
 
 type Props = {
   offerId: string;
 }
 
 export default function OfferReviewSection({ offerId }: Props): JSX.Element {
-  const authStatus = useAppSelector((state) => state.auth.authStatus);
+  const authStatus = useAppSelector(getAuthStatus);
 
   const [comments, setComments] = useState<ReviewModel[] | null>();
 
   useAsyncEffect((signal) => handleRequest(
-    () => appApi.get<ReviewModel[]>(`comments/${offerId}`, { signal }),
+    () => appApi.get<ReviewModel[]>(`${ApiRoute.Comments}/${offerId}`, { signal }),
     setComments,
     { [404]: () => setComments(null) }
   ), [offerId]);

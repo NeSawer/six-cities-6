@@ -1,20 +1,24 @@
 import { Link, Navigate } from 'react-router-dom';
-import { AppRoute } from '../../app-route';
+import { AppRoute } from '../../configuration/app-route';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { AuthorizationStatus } from '../../models/authorization-status';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
-import prevented from '../../tools/prevented';
-import { fetchRegistration } from '../../store/namespaces/auth';
+import withPrevent from '../../tools/with-prevent';
+import { fetchRegistration, getAuthStatus } from '../../store/auth/auth';
+import cities from '../../mocks/cities';
+import { selectCity } from '../../store/offers/offers';
 
 export default function LoginPage(): JSX.Element {
-  const authStatus = useAppSelector((state) => state.auth.authStatus);
+  const authStatus = useAppSelector(getAuthStatus);
   const dispatch = useAppDispatch();
 
   const [formState, setFormState] = useState({
     email: '',
     password: ''
   });
+
+  const randomCity = useMemo(() => cities[Math.floor(Math.random() * cities.length)], []);
 
   if (authStatus === AuthorizationStatus.Auth) {
     return <Navigate to={AppRoute.Root} />;
@@ -42,7 +46,7 @@ export default function LoginPage(): JSX.Element {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form className="login__form form" onSubmit={prevented(() => dispatch(fetchRegistration(formState)))}>
+            <form className="login__form form" onSubmit={withPrevent(() => dispatch(fetchRegistration(formState)))}>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input
@@ -78,9 +82,9 @@ export default function LoginPage(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
-              </a>
+              <Link className="locations__item-link" to={AppRoute.Root} onClick={() => dispatch(selectCity(randomCity))}>
+                <span>{randomCity.name}</span>
+              </Link>
             </div>
           </section>
         </div>

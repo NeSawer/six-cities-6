@@ -1,11 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { AppRoute } from '../../app-route';
+import { AppRoute } from '../../configuration/app-route';
 import { OfferShortModel } from '../../models/offer-short-model';
-import prevented from '../../tools/prevented';
+import withPrevent from '../../tools/with-prevent';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
-import { fetchUpdateFavoriteOffer } from '../../store/namespaces/offers';
+import { fetchUpdateFavoriteOffer } from '../../store/offers/offers';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { AuthorizationStatus } from '../../models/authorization-status';
+import { getAuthStatus } from '../../store/auth/auth';
 
 type Props = {
   variant: 'city' | 'favorite' | 'nearby';
@@ -17,7 +18,7 @@ type Props = {
 export default function PlaceCard({ variant, model, onMouseEnter, onMouseLeave }: Props): JSX.Element {
   const navigate = useNavigate();
 
-  const authStatus = useAppSelector((state) => state.auth.authStatus);
+  const authStatus = useAppSelector(getAuthStatus);
   const dispatch = useAppDispatch();
 
   const variantClass = {
@@ -64,7 +65,7 @@ export default function PlaceCard({ variant, model, onMouseEnter, onMouseLeave }
           <button
             className={`place-card__bookmark-button ${model.isFavorite ? 'place-card__bookmark-button--active ' : ''}button`}
             type="button"
-            onClick={prevented(bookmarkOnClick)}
+            onClick={withPrevent(bookmarkOnClick)}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
@@ -74,7 +75,7 @@ export default function PlaceCard({ variant, model, onMouseEnter, onMouseLeave }
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${model.rating * 20}%` }}></span>
+            <span style={{ width: `${Math.round(model.rating) * 20}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

@@ -23,7 +23,7 @@ export default function OfferReview({ model }: Props): JSX.Element {
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{ width: `${model.rating * 20}%` }} />
+            <span style={{ width: `${Math.round(model.rating) * 20}%` }} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

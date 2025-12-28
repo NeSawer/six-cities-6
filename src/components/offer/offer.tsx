@@ -6,14 +6,15 @@ import { OfferShortModel } from '../../models/offer-short-model';
 import Map from '../map/map';
 import Loader from '../loader/loader';
 import { LocationModel } from '../../models/location-model';
-import { Setting } from '../../configuration/consts';
-import prevented from '../../tools/prevented';
-import { fetchUpdateFavoriteOffer } from '../../store/namespaces/offers';
+import { Settings } from '../../configuration/settings';
+import withPrevent from '../../tools/with-prevent';
+import { fetchUpdateFavoriteOffer } from '../../store/offers/offers';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { AuthorizationStatus } from '../../models/authorization-status';
 import { useNavigate } from 'react-router-dom';
-import { AppRoute } from '../../app-route';
+import { AppRoute } from '../../configuration/app-route';
+import { getAuthStatus } from '../../store/auth/auth';
 
 type Props = {
   offer: OfferModel;
@@ -23,9 +24,9 @@ type Props = {
 export default function Offer({ offer, nearbyOffers }: Props): JSX.Element {
   const navigate = useNavigate();
 
-  const authStatus = useAppSelector((state) => state.auth.authStatus);
+  const authStatus = useAppSelector(getAuthStatus);
   const dispatch = useAppDispatch();
-  const limitedNearbyOffers = nearbyOffers?.slice(0, Setting.NEARBY_OFFERS_LIMIT);
+  const limitedNearbyOffers = nearbyOffers?.slice(0, Settings.NEARBY_OFFERS_LIMIT);
 
   const offerLocations: [string, LocationModel][] = useMemo(
     () => {
@@ -53,7 +54,7 @@ export default function Offer({ offer, nearbyOffers }: Props): JSX.Element {
       <section className="offer">
         <div className="offer__gallery-container container">
           <div className="offer__gallery">
-            {offer.images.map((url) => (
+            {offer.images.slice(0, Settings.OFFER_MAX_IMAGES).map((url) => (
               <div key={url} className="offer__image-wrapper">
                 <img
                   className="offer__image"
@@ -77,7 +78,7 @@ export default function Offer({ offer, nearbyOffers }: Props): JSX.Element {
               <button
                 className={`offer__bookmark-button ${offer.isFavorite ? 'offer__bookmark-button--active ' : ''}button`}
                 type="button"
-                onClick={prevented(bookmarkOnClick)}
+                onClick={withPrevent(bookmarkOnClick)}
               >
                 <svg className="offer__bookmark-icon" width={31} height={33}>
                   <use xlinkHref="#icon-bookmark" />
@@ -87,18 +88,18 @@ export default function Offer({ offer, nearbyOffers }: Props): JSX.Element {
             </div>
             <div className="offer__rating rating">
               <div className="offer__stars rating__stars">
-                <span style={{ width: `${offer.rating * 20}%` }} />
+                <span style={{ width: `${Math.round(offer.rating) * 20}%` }} />
                 <span className="visually-hidden">Rating</span>
               </div>
               <span className="offer__rating-value rating__value">{offer.rating}</span>
             </div>
             <ul className="offer__features">
-              <li className="offer__feature offer__feature--entire">{offer.type}</li>
+              <li className="offer__feature offer__feature--entire">{offer.type[0].toUpperCase()}{offer.type.slice(1)}</li>
               <li className="offer__feature offer__feature--bedrooms">
-                {offer.bedrooms} Bedrooms
+                {offer.bedrooms} Bedroom{offer.bedrooms > 1 ? 's' : ''}
               </li>
               <li className="offer__feature offer__feature--adults">
-                Max {offer.maxAdults} adults
+                Max {offer.maxAdults} adult{offer.maxAdults > 1 ? 's' : ''}
               </li>
             </ul>
             <div className="offer__price">

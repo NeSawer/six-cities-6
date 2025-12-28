@@ -1,13 +1,13 @@
 import axios from 'axios';
 import { getToken } from '../services/token';
+import { Settings } from '../configuration/settings';
 
-const BACKEND_URL = ' https://14.design.htmlacademy.pro/six-cities';
-const REQUEST_TIMEOUT = 5000;
-
-export const appApi = axios.create({
-  baseURL: BACKEND_URL,
-  timeout: REQUEST_TIMEOUT,
+export const createAppApi = () => axios.create({
+  baseURL: Settings.API.URL,
+  timeout: Settings.API.TIMEOUT,
 });
+
+export const appApi = createAppApi();
 
 appApi.interceptors.request.use(
   (config) => {

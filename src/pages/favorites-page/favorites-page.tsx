@@ -1,16 +1,19 @@
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/use-app-selector';
-import { AppRoute } from '../../app-route';
+import { AppRoute } from '../../configuration/app-route';
 import FavoritePlaceCardList from '../../components/place-card/favorite-place-card-list';
 import Header from '../../components/header/header';
+import { getFavoriteOffers } from '../../store/offers/offers';
 
 export default function FavoritesPage(): JSX.Element {
-  const favoriteOffers = useAppSelector((state) => state.offers.favoriteOffers);
+  const favoriteOffers = useAppSelector(getFavoriteOffers);
+
+  const isEmpty = favoriteOffers && favoriteOffers.length === 0;
 
   return (
-    <div className="page">
+    <div className={`page${isEmpty ? ' page--favorites-empty' : ''}`}>
       <Header />
-      <main className="page__main page__main--favorites">
+      <main className={`page__main page__main--favorites${isEmpty ? ' page__main--favorites-empty' : ''}`}>
         <div className="page__favorites-container container">
           <FavoritePlaceCardList offers={favoriteOffers} />
         </div>

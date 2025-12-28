@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import prevented from '../../tools/prevented';
+import withPrevent from '../../tools/with-prevent';
 import handleRequest from '../../tools/handle-request';
 import { appApi } from '../../api/api';
 import { ReviewModel } from '../../models/review-model';
+import { ApiRoute } from '../../configuration/api-route';
+import { Settings } from '../../configuration/settings';
 
 type Props = {
   offerId: string;
@@ -10,20 +12,36 @@ type Props = {
 }
 
 export default function OfferReviewForm({ offerId, onPostComment }: Props): JSX.Element {
+  const [sumbitStatus, setSubmitStatus] = useState({
+    isInProgress: false,
+    isError: false
+  });
   const [formState, setFormState] = useState({
     rating: 0,
     comment: ''
   });
 
-  const allowed = formState.rating && formState.comment.length >= 50;
+  const allowed = !sumbitStatus.isInProgress
+    && formState.rating
+    && formState.comment.length >= Settings.OFFER_REVIEW.COMMENT_MIN_LENGTH
+    && formState.comment.length <= Settings.OFFER_REVIEW.COMMENT_MAX_LENGTH;
 
-  const postComment = () => handleRequest(
-    () => appApi.post<ReviewModel>(`comments/${offerId}`, formState),
-    onPostComment
-  );
+  const postComment = () => {
+    setSubmitStatus({ isInProgress: true, isError: false });
+    handleRequest(
+      () => appApi.post<ReviewModel>(`${ApiRoute.Comments}/${offerId}`, formState),
+      (comment) => {
+        onPostComment(comment);
+        setFormState({ rating: 0, comment: '' });
+        setSubmitStatus({ isInProgress: false, isError: false });
+      },
+      {},
+      () => setSubmitStatus({ isInProgress: false, isError: true })
+    );
+  };
 
   return (
-    <form className="reviews__form form" onSubmit={prevented(postComment)}>
+    <form className="reviews__form form" onSubmit={withPrevent(postComment)}>
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
@@ -34,7 +52,9 @@ export default function OfferReviewForm({ offerId, onPostComment }: Props): JSX.
           value={5}
           id="5-stars"
           type="radio"
+          disabled={sumbitStatus.isInProgress}
           onChange={(e) => setFormState((s) => ({ ...s, rating: +e.target.value }))}
+          checked={formState.rating === 5}
         />
         <label
           htmlFor="5-stars"
@@ -51,7 +71,9 @@ export default function OfferReviewForm({ offerId, onPostComment }: Props): JSX.
           value={4}
           id="4-stars"
           type="radio"
+          disabled={sumbitStatus.isInProgress}
           onChange={(e) => setFormState((s) => ({ ...s, rating: +e.target.value }))}
+          checked={formState.rating === 4}
         />
         <label
           htmlFor="4-stars"
@@ -68,7 +90,9 @@ export default function OfferReviewForm({ offerId, onPostComment }: Props): JSX.
           value={3}
           id="3-stars"
           type="radio"
+          disabled={sumbitStatus.isInProgress}
           onChange={(e) => setFormState((s) => ({ ...s, rating: +e.target.value }))}
+          checked={formState.rating === 3}
         />
         <label
           htmlFor="3-stars"
@@ -85,7 +109,9 @@ export default function OfferReviewForm({ offerId, onPostComment }: Props): JSX.
           value={2}
           id="2-stars"
           type="radio"
+          disabled={sumbitStatus.isInProgress}
           onChange={(e) => setFormState((s) => ({ ...s, rating: +e.target.value }))}
+          checked={formState.rating === 2}
         />
         <label
           htmlFor="2-stars"
@@ -102,7 +128,9 @@ export default function OfferReviewForm({ offerId, onPostComment }: Props): JSX.
           value={1}
           id="1-star"
           type="radio"
+          disabled={sumbitStatus.isInProgress}
           onChange={(e) => setFormState((s) => ({ ...s, rating: +e.target.value }))}
+          checked={formState.rating === 1}
         />
         <label
           htmlFor="1-star"
@@ -120,6 +148,7 @@ export default function OfferReviewForm({ offerId, onPostComment }: Props): JSX.
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={formState.comment}
+        disabled={sumbitStatus.isInProgress}
         onChange={(e) => setFormState((s) => ({ ...s, comment: e.target.value }))}
       />
       <div className="reviews__button-wrapper">
@@ -127,7 +156,7 @@ export default function OfferReviewForm({ offerId, onPostComment }: Props): JSX.
           To submit review please make sure to set{' '}
           <span className="reviews__star">rating</span> and describe
           your stay with at least{' '}
-          <b className="reviews__text-amount">50 characters</b>.
+          <b className="reviews__text-amount">{Settings.OFFER_REVIEW.COMMENT_MIN_LENGTH} characters</b>.
         </p>
         <button
           className="reviews__submit form__submit button"
@@ -137,6 +166,10 @@ export default function OfferReviewForm({ offerId, onPostComment }: Props): JSX.
           Submit
         </button>
       </div>
+      {sumbitStatus.isError &&
+        <p className="reviews__help" style={{ color: 'red' }}>
+          An error occurred while submitting. Please try again later
+        </p>}
     </form>
   );
 }

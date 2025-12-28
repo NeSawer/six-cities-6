@@ -6,11 +6,11 @@ import MainPlaceCardList from '../../components/place-card/main-place-card-list'
 import Map from '../../components/map/map';
 import cities from '../../mocks/cities';
 import Header from '../../components/header/header';
-import { selectCity } from '../../store/namespaces/offers';
+import { getOffers, getSelectedCity, selectCity } from '../../store/offers/offers';
 
 export default function MainPage(): JSX.Element {
-  const selectedCity = useAppSelector((state) => state.offers.selectedCity);
-  const offers = useAppSelector((state) => state.offers.offers);
+  const selectedCity = useAppSelector(getSelectedCity);
+  const offers = useAppSelector(getOffers);
   const dispatch = useAppDispatch();
 
   const [activeOfferId, setActiveOfferId] = useState<string>();
@@ -25,7 +25,7 @@ export default function MainPage(): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Header />
-      <main className="page__main page__main--index">
+      <main className={`page__main page__main--index${isEmpty ? ' page__main--index-empty' : ''}`}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <CityList

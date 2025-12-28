@@ -1,15 +1,15 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useAppDispatch } from './hooks/use-app-dispatch';
-import { AppRoute } from './app-route';
+import { AppRoute } from './configuration/app-route';
 import PrivateRoute from './components/private-route/private-route';
 import MainPage from './pages/main-page/main-page';
 import LoginPage from './pages/login-page/login-page';
 import FavoritesPage from './pages/favorites-page/favorites-page';
 import OfferPage from './pages/offer-page/offer-page';
 import NotFoundPage from './pages/not-found-page/not-found-page';
-import { fetchLogin } from './store/namespaces/auth';
-import { fetchOffers } from './store/namespaces/offers';
+import { fetchLogin } from './store/auth/auth';
+import { fetchOffers } from './store/offers/offers';
 
 export default function App(): JSX.Element {
   const dispatch = useAppDispatch();
