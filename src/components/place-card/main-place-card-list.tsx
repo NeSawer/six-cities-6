@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react';
 import { OfferShortModel } from '../../models/offer-short-model';
 import { OfferSortOption } from '../../models/offer-sort-option';
-import PlaceCardSortForm from './place-card-sort-form';
-import PlaceCard from './place-card';
+import { PlaceCardSortFormMemo } from './place-card-sort-form';
+import { PlaceCardMemo } from './place-card';
 import Loader from '../loader/loader';
 
 type Props = {
@@ -34,10 +34,10 @@ export default function MainPlaceCardList({ cityName, offers, onChangeActiveOffe
         :
         <>
           <b className="places__found">{sortedOffers.length} places to stay in {cityName}</b>
-          <PlaceCardSortForm selectedOption={selectedSortOption} onChange={setSelectedSortOption} />
+          <PlaceCardSortFormMemo selectedOption={selectedSortOption} onChange={setSelectedSortOption} />
           <div className="cities__places-list places__list tabs__content">
             {sortedOffers.map((c) => (
-              <PlaceCard
+              <PlaceCardMemo
                 variant='city'
                 key={c.id}
                 model={c}

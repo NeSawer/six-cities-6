@@ -7,6 +7,7 @@ import { fetchUpdateFavoriteOffer } from '../../store/offers/offers';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { AuthorizationStatus } from '../../models/authorization-status';
 import { getAuthStatus } from '../../store/auth/auth';
+import { memo } from 'react';
 
 type Props = {
   variant: 'city' | 'favorite' | 'nearby';
@@ -15,7 +16,7 @@ type Props = {
   onMouseLeave?: React.MouseEventHandler<HTMLDivElement>;
 };
 
-export default function PlaceCard({ variant, model, onMouseEnter, onMouseLeave }: Props): JSX.Element {
+function PlaceCard({ variant, model, onMouseEnter, onMouseLeave }: Props): JSX.Element {
   const navigate = useNavigate();
 
   const authStatus = useAppSelector(getAuthStatus);
@@ -87,3 +88,5 @@ export default function PlaceCard({ variant, model, onMouseEnter, onMouseLeave }
     </article>
   );
 }
+
+export const PlaceCardMemo = memo(PlaceCard);

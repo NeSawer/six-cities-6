@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { OfferShortModel } from '../../models/offer-short-model';
 import groupBy from '../../tools/group-by';
 import Loader from '../loader/loader';
-import PlaceCard from './place-card';
+import { PlaceCardMemo } from './place-card';
 
 type Props = {
   offers: OfferShortModel[] | null;
@@ -42,7 +42,7 @@ export default function FavoritePlaceCardList({ offers }: Props): JSX.Element {
                   </div>
                   <div className="favorites__places">
                     {cards.map((c) => (
-                      <PlaceCard
+                      <PlaceCardMemo
                         variant='favorite'
                         key={c.id}
                         model={c}
