@@ -6,7 +6,7 @@ import handleRequest from '../tools/handle-request';
 import { dropToken, saveToken } from '../services/token';
 import { RegistrationRequest } from '../models/registration-request';
 import { AxiosInstance } from 'axios';
-import { fetchFavoriteOffers } from './offers';
+import { fetchFavoriteOffers } from './offers/offers';
 import { ApiRoute } from '../configuration/api-route';
 import { State } from '.';
 

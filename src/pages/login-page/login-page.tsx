@@ -7,7 +7,7 @@ import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import withPrevent from '../../tools/with-prevent';
 import { fetchRegistration, getAuthStatus } from '../../store/auth';
 import cities from '../../mocks/cities';
-import { selectCity } from '../../store/offers';
+import { selectCity } from '../../store/offers/offers';
 
 export default function LoginPage(): JSX.Element {
   const authStatus = useAppSelector(getAuthStatus);

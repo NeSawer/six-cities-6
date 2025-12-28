@@ -3,7 +3,7 @@ import { useAppSelector } from '../../hooks/use-app-selector';
 import { AppRoute } from '../../configuration/app-route';
 import FavoritePlaceCardList from '../../components/place-card/favorite-place-card-list';
 import Header from '../../components/header/header';
-import { getFavoriteOffers } from '../../store/offers';
+import { getFavoriteOffers } from '../../store/offers/offers';
 
 export default function FavoritesPage(): JSX.Element {
   const favoriteOffers = useAppSelector(getFavoriteOffers);

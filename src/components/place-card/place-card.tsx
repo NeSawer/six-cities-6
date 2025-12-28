@@ -3,7 +3,7 @@ import { AppRoute } from '../../configuration/app-route';
 import { OfferShortModel } from '../../models/offer-short-model';
 import withPrevent from '../../tools/with-prevent';
 import { useAppDispatch } from '../../hooks/use-app-dispatch';
-import { fetchUpdateFavoriteOffer } from '../../store/offers';
+import { fetchUpdateFavoriteOffer } from '../../store/offers/offers';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { AuthorizationStatus } from '../../models/authorization-status';
 import { getAuthStatus } from '../../store/auth';
