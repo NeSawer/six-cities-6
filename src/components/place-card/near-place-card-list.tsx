@@ -1,5 +1,5 @@
 import { OfferShortModel } from '../../models/offer-short-model';
-import PlaceCard from './place-card';
+import { PlaceCardMemo } from './place-card';
 
 type Props = {
   placeCards: OfferShortModel[];
@@ -13,7 +13,7 @@ export default function NearPlaceCardList({ placeCards }: Props): JSX.Element {
       </h2>
       <div className="near-places__list places__list">
         {placeCards.map((c) => (
-          <PlaceCard
+          <PlaceCardMemo
             variant='nearby'
             key={c.id}
             model={c}

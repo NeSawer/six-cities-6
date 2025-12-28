@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import withPrevent from '../../tools/with-prevent';
 import handleRequest from '../../tools/handle-request';
 import { appApi } from '../../api/api';
@@ -8,8 +8,17 @@ import { Settings } from '../../configuration/settings';
 
 type Props = {
   offerId: string;
-  onPostComment: (comment: ReviewModel) => unknown;
+  onPostComment?: (comment: ReviewModel) => unknown;
 }
+
+const STARS = [5, 4, 3, 2, 1];
+const STAR_TITLES = [
+  'perfect',
+  'good',
+  'not bad',
+  'badly',
+  'terribly'
+];
 
 export default function OfferReviewForm({ offerId, onPostComment }: Props): JSX.Element {
   const [sumbitStatus, setSubmitStatus] = useState({
@@ -31,7 +40,7 @@ export default function OfferReviewForm({ offerId, onPostComment }: Props): JSX.
     handleRequest(
       () => appApi.post<ReviewModel>(`${ApiRoute.Comments}/${offerId}`, formState),
       (comment) => {
-        onPostComment(comment);
+        onPostComment?.(comment);
         setFormState({ rating: 0, comment: '' });
         setSubmitStatus({ isInProgress: false, isError: false });
       },
@@ -46,101 +55,29 @@ export default function OfferReviewForm({ offerId, onPostComment }: Props): JSX.
         Your review
       </label>
       <div className="reviews__rating-form form__rating">
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value={5}
-          id="5-stars"
-          type="radio"
-          disabled={sumbitStatus.isInProgress}
-          onChange={(e) => setFormState((s) => ({ ...s, rating: +e.target.value }))}
-          checked={formState.rating === 5}
-        />
-        <label
-          htmlFor="5-stars"
-          className="reviews__rating-label form__rating-label"
-          title="perfect"
-        >
-          <svg className="form__star-image" width={37} height={33}>
-            <use xlinkHref="#icon-star" />
-          </svg>
-        </label>
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value={4}
-          id="4-stars"
-          type="radio"
-          disabled={sumbitStatus.isInProgress}
-          onChange={(e) => setFormState((s) => ({ ...s, rating: +e.target.value }))}
-          checked={formState.rating === 4}
-        />
-        <label
-          htmlFor="4-stars"
-          className="reviews__rating-label form__rating-label"
-          title="good"
-        >
-          <svg className="form__star-image" width={37} height={33}>
-            <use xlinkHref="#icon-star" />
-          </svg>
-        </label>
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value={3}
-          id="3-stars"
-          type="radio"
-          disabled={sumbitStatus.isInProgress}
-          onChange={(e) => setFormState((s) => ({ ...s, rating: +e.target.value }))}
-          checked={formState.rating === 3}
-        />
-        <label
-          htmlFor="3-stars"
-          className="reviews__rating-label form__rating-label"
-          title="not bad"
-        >
-          <svg className="form__star-image" width={37} height={33}>
-            <use xlinkHref="#icon-star" />
-          </svg>
-        </label>
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value={2}
-          id="2-stars"
-          type="radio"
-          disabled={sumbitStatus.isInProgress}
-          onChange={(e) => setFormState((s) => ({ ...s, rating: +e.target.value }))}
-          checked={formState.rating === 2}
-        />
-        <label
-          htmlFor="2-stars"
-          className="reviews__rating-label form__rating-label"
-          title="badly"
-        >
-          <svg className="form__star-image" width={37} height={33}>
-            <use xlinkHref="#icon-star" />
-          </svg>
-        </label>
-        <input
-          className="form__rating-input visually-hidden"
-          name="rating"
-          value={1}
-          id="1-star"
-          type="radio"
-          disabled={sumbitStatus.isInProgress}
-          onChange={(e) => setFormState((s) => ({ ...s, rating: +e.target.value }))}
-          checked={formState.rating === 1}
-        />
-        <label
-          htmlFor="1-star"
-          className="reviews__rating-label form__rating-label"
-          title="terribly"
-        >
-          <svg className="form__star-image" width={37} height={33}>
-            <use xlinkHref="#icon-star" />
-          </svg>
-        </label>
+        {STARS.map((star, index) => (
+          <Fragment key={star}>
+            <input
+              className="form__rating-input visually-hidden"
+              name="rating"
+              value={star}
+              id={`${star}-stars`}
+              type="radio"
+              disabled={sumbitStatus.isInProgress}
+              onChange={(e) => setFormState((s) => ({ ...s, rating: +e.target.value }))}
+              checked={formState.rating === star}
+            />
+            <label
+              htmlFor={`${star}-stars`}
+              className="reviews__rating-label form__rating-label"
+              title={STAR_TITLES[index]}
+            >
+              <svg className="form__star-image" width={37} height={33}>
+                <use xlinkHref="#icon-star" />
+              </svg>
+            </label>
+          </Fragment>
+        ))}
       </div>
       <textarea
         className="reviews__textarea form__textarea"

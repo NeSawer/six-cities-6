@@ -6,8 +6,13 @@ type Props = {
 
 export default function Loader({ size }: Props): JSX.Element {
   return (
-    <div className={styles.loader_box}>
-      <span className={styles.loader} style={size ? { width: `${size}px`, height: `${size}px` } : undefined} ></span>
+    <div className={styles.loader_box} data-testid="loader-box">
+      <span
+        className={styles.loader}
+        style={size ? { width: `${size}px`, height: `${size}px` } : undefined}
+        data-testid="loader"
+      >
+      </span>
     </div>
   );
 }

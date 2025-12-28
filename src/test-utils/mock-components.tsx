@@ -8,7 +8,7 @@ import { createAppApi } from '../api/api';
 import { State } from '../store';
 import { AppThunkDispatch } from './mock';
 
-export function withHistory(component: JSX.Element, initialEntries: string[]) {
+export function withHistory(component: JSX.Element, initialEntries?: string[]) {
   return (
     <MemoryRouter initialEntries={initialEntries}>
       {component}

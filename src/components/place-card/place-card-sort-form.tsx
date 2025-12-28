@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { OfferSortOption } from '../../models/offer-sort-option';
 
 const SORT_OPTIONS: OfferSortOption[] = [
@@ -13,7 +13,7 @@ type Props = {
   onChange?: (value: OfferSortOption) => void;
 };
 
-export default function PlaceCardSortForm({ selectedOption, onChange }: Props): JSX.Element {
+function PlaceCardSortForm({ selectedOption, onChange }: Props): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -47,3 +47,5 @@ export default function PlaceCardSortForm({ selectedOption, onChange }: Props): 
     </form>
   );
 }
+
+export const PlaceCardSortFormMemo = memo(PlaceCardSortForm);
