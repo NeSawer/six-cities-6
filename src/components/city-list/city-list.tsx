@@ -1,9 +1,10 @@
 import { CityModel } from '../../models/city';
+import withPrevent from '../../tools/with-prevent';
 
 type Props = {
   cities: CityModel[];
   selectedCityName: string;
-  onSelectCity: (city: CityModel) => void;
+  onSelectCity?: (city: CityModel) => void;
 };
 
 export default function CityList({ cities, selectedCityName, onSelectCity }: Props): JSX.Element {
@@ -15,7 +16,7 @@ export default function CityList({ cities, selectedCityName, onSelectCity }: Pro
             <a
               className={`locations__item-link tabs__item${city.name === selectedCityName ? ' tabs__item--active' : ''}`}
               href="#"
-              onClick={() => onSelectCity(city)}
+              onClick={withPrevent(() => onSelectCity?.(city))}
             >
               <span>{city.name}</span>
             </a>

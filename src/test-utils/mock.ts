@@ -17,6 +17,11 @@ export const makeFakeUser = (): UserModel => ({
   token: datatype.string(20)
 });
 
+export const makeFakeOfferWith = (fields: Partial<OfferModel & OfferShortModel>): OfferModel & OfferShortModel => ({
+  ...makeFakeOffer(),
+  ...fields
+});
+
 export const makeFakeOffer = (isFavorite?: boolean): OfferModel & OfferShortModel => ({
   id: datatype.uuid(),
   title: name.title(),
