@@ -33,7 +33,7 @@ describe('Component: PlaceCard', () => {
     const offer = makeFakeOffer();
     const { withStoreComponent } = withStore(withHistory(<PlaceCardMemo variant='favorite' model={offer} />), state);
 
-    render(withStoreComponent); 
+    render(withStoreComponent);
 
     expect(screen.queryByText(offer.title)).toBeInTheDocument();
     expect(screen.queryByText(offer.type)).toBeInTheDocument();

@@ -19,12 +19,12 @@ describe('Component: MainPlaceCardList', () => {
     expect(screen.queryByText(offers[0].title)).toBeInTheDocument();
     expect(screen.queryByText(offers[offers.length - 1].title)).toBeInTheDocument();
   });
-  
+
   it('should render correctly when loading', () => {
     const { withStoreComponent } = withStore(withHistory(<MainPlaceCardList cityName='Paris' />), state);
-    
+
     render(withStoreComponent);
-    
+
     expect(screen.queryByText(/places to stay in/)).not.toBeInTheDocument();
     expect(screen.queryByTestId('loader')).toBeInTheDocument();
   });
