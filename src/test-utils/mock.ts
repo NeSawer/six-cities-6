@@ -69,6 +69,9 @@ export const makeFakeOfferWith = (fields: Partial<OfferModel & OfferShortModel>)
 export const makeFakeOffers = (isFavorite?: boolean, count?: number): (OfferModel & OfferShortModel)[] =>
   new Array(count ?? 10).fill(null).map(() => makeFakeOffer(isFavorite));
 
+export const makeFakeOffersWith = (fields: Partial<OfferModel & OfferShortModel>, count?: number): (OfferModel & OfferShortModel)[] =>
+  new Array(count ?? 10).fill(null).map(() => makeFakeOfferWith(fields));
+
 export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAppApi>, Action>;
 
 export const makeFakeStore = (initialState?: Partial<State>): State => ({

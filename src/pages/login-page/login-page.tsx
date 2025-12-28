@@ -83,7 +83,7 @@ export default function LoginPage(): JSX.Element {
           <section className="locations locations--login locations--current">
             <div className="locations__item">
               <Link className="locations__item-link" to={AppRoute.Root} onClick={() => dispatch(selectCity(randomCity))}>
-                <span>{randomCity.name}</span>
+                <span data-testid="random-city-name">{randomCity.name}</span>
               </Link>
             </div>
           </section>

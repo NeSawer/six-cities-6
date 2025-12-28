@@ -4,6 +4,7 @@ import { render, screen } from '@testing-library/react';
 import { AppRoute } from '../../configuration/app-route';
 import { withHistory, withStore } from '../../test-utils/mock-components';
 import { AuthorizationStatus } from '../../models/authorization-status';
+import { makeFakeStore } from '../../test-utils/mock';
 
 describe('Component: PrivateRoute', () => {
   it('should render component for public route, when user not authorized', () => {
@@ -20,7 +21,7 @@ describe('Component: PrivateRoute', () => {
         />
       </Routes>,
       [AppRoute.Offer]
-    ), { auth: { authStatus: AuthorizationStatus.NoAuth, currentUser: null } });
+    ), makeFakeStore({ auth: { authStatus: AuthorizationStatus.NoAuth, currentUser: null } }));
 
     render(withStoreComponent);
 
@@ -42,7 +43,7 @@ describe('Component: PrivateRoute', () => {
         />
       </Routes>,
       [AppRoute.Offer]
-    ), { auth: { authStatus: AuthorizationStatus.Auth, currentUser: null } });
+    ), makeFakeStore({ auth: { authStatus: AuthorizationStatus.Auth, currentUser: null } }));
 
     render(withStoreComponent);
 

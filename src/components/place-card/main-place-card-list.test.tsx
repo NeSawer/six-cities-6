@@ -1,16 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import { withHistory, withStore } from '../../test-utils/mock-components';
-import { makeFakeOffers } from '../../test-utils/mock';
-import { AuthorizationStatus } from '../../models/authorization-status';
+import { makeFakeOffers, makeFakeStore } from '../../test-utils/mock';
 import MainPlaceCardList from './main-place-card-list';
 
 describe('Component: MainPlaceCardList', () => {
-  const state = { auth: { authStatus: AuthorizationStatus.Unknown, currentUser: null } };
-
   it('should render correctly', () => {
     const cityName = 'Paris';
     const offers = makeFakeOffers();
-    const { withStoreComponent } = withStore(withHistory(<MainPlaceCardList cityName={cityName} offers={offers} />), state);
+    const { withStoreComponent } = withStore(withHistory(<MainPlaceCardList cityName={cityName} offers={offers} />), makeFakeStore());
 
     render(withStoreComponent);
 
@@ -21,7 +18,7 @@ describe('Component: MainPlaceCardList', () => {
   });
 
   it('should render correctly when loading', () => {
-    const { withStoreComponent } = withStore(withHistory(<MainPlaceCardList cityName='Paris' />), state);
+    const { withStoreComponent } = withStore(withHistory(<MainPlaceCardList cityName='Paris' />), makeFakeStore());
 
     render(withStoreComponent);
 

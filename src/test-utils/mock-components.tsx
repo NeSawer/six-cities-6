@@ -3,7 +3,7 @@ import MockAdapter from 'axios-mock-adapter';
 import thunk from 'redux-thunk';
 import { Action } from 'redux';
 import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { createAppApi } from '../api/api';
 import { State } from '../store';
 import { AppThunkDispatch } from './mock';
@@ -12,6 +12,16 @@ export function withHistory(component: JSX.Element, initialEntries?: string[]) {
   return (
     <MemoryRouter initialEntries={initialEntries}>
       {component}
+    </MemoryRouter>
+  );
+}
+
+export function withRoute(component: JSX.Element, routePath: string, route: string) {
+  return (
+    <MemoryRouter initialEntries={[route]}>
+      <Routes>
+        <Route path={routePath} element={component} />
+      </Routes>
     </MemoryRouter>
   );
 }
