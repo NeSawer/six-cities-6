@@ -1,6 +1,5 @@
-import { Fragment, useMemo } from 'react';
+import { Fragment, useMemo, useState } from 'react';
 import { OfferModel } from '../../models/offer-model';
-import OfferReviewSection from '../offer-review/offer-review-section';
 import NearPlaceCardList from '../place-card/near-place-card-list';
 import { OfferShortModel } from '../../models/offer-short-model';
 import Map from '../map/map';
@@ -15,6 +14,13 @@ import { AuthorizationStatus } from '../../models/authorization-status';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../configuration/app-route';
 import { getAuthStatus } from '../../store/auth/auth';
+import useAsyncEffect from '../../hooks/use-async-effect';
+import handleRequest from '../../tools/handle-request';
+import { ReviewModel } from '../../models/review-model';
+import { ApiRoute } from '../../configuration/api-route';
+import { appApi } from '../../api/api';
+import OfferReviewList from '../offer-review/offer-review-list';
+import OfferReviewForm from '../offer-review/offer-review-form';
 
 type Props = {
   offer: OfferModel;
@@ -27,6 +33,14 @@ export default function Offer({ offer, nearbyOffers }: Props): JSX.Element {
   const authStatus = useAppSelector(getAuthStatus);
   const dispatch = useAppDispatch();
   const limitedNearbyOffers = nearbyOffers?.slice(0, Settings.NEARBY_OFFERS_LIMIT);
+
+  const [comments, setComments] = useState<ReviewModel[] | null>();
+
+  useAsyncEffect((signal) => handleRequest(
+    () => appApi.get<ReviewModel[]>(`${ApiRoute.Comments}/${offer.id}`, { signal }),
+    setComments,
+    { [404]: () => setComments(null) }
+  ), [offer]);
 
   const offerLocations: [string, LocationModel][] = useMemo(
     () => {
@@ -135,7 +149,19 @@ export default function Offer({ offer, nearbyOffers }: Props): JSX.Element {
                 </p>
               </div>
             </div>
-            <OfferReviewSection offerId={offer.id} />
+            <section className="offer__reviews reviews">
+              <h2 className="reviews__title">
+                Reviews · <span className="reviews__amount">{comments?.length}</span>
+              </h2>
+              {!comments
+                ? <Loader />
+                : <OfferReviewList models={comments} />}
+              {authStatus === AuthorizationStatus.Auth &&
+                <OfferReviewForm
+                  offerId={offer.id}
+                  onPostComment={(comment) => setComments((prev) => [...prev ?? [], comment])}
+                />}
+            </section>
           </div>
         </div>
         <Map

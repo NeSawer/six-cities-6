@@ -8,6 +8,7 @@ import { AuthorizationStatus } from '../models/authorization-status';
 import { Action, ThunkDispatch } from '@reduxjs/toolkit';
 import { createAppApi } from '../api/api';
 import { UserModel } from '../models/user-model';
+import { ReviewModel } from '../models/review-model';
 
 export const makeFakeUser = (): UserModel => ({
   name: name.firstName(),
@@ -16,6 +17,22 @@ export const makeFakeUser = (): UserModel => ({
   email: internet.email(),
   token: datatype.string(20)
 });
+
+export const makeFakeReview = (fields?: Partial<ReviewModel>): ReviewModel => ({
+  id: datatype.uuid(),
+  comment: datatype.string(70),
+  date: datatype.datetime().toISOString(),
+  rating: datatype.number(5),
+  user: {
+    name: name.firstName(),
+    avatarUrl: system.filePath(),
+    isPro: datatype.boolean()
+  },
+  ...fields
+});
+
+export const makeFakeReviews = (fields?: Partial<ReviewModel>, count?: number): ReviewModel[] =>
+  new Array(count ?? 10).fill(null).map(() => makeFakeReview(fields));
 
 export const makeFakeOffer = (isFavorite?: boolean): OfferModel & OfferShortModel => ({
   id: datatype.uuid(),

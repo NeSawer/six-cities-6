@@ -8,7 +8,7 @@ import { Settings } from '../../configuration/settings';
 
 type Props = {
   offerId: string;
-  onPostComment: (comment: ReviewModel) => unknown;
+  onPostComment?: (comment: ReviewModel) => unknown;
 }
 
 const STARS = [5, 4, 3, 2, 1];
@@ -40,7 +40,7 @@ export default function OfferReviewForm({ offerId, onPostComment }: Props): JSX.
     handleRequest(
       () => appApi.post<ReviewModel>(`${ApiRoute.Comments}/${offerId}`, formState),
       (comment) => {
-        onPostComment(comment);
+        onPostComment?.(comment);
         setFormState({ rating: 0, comment: '' });
         setSubmitStatus({ isInProgress: false, isError: false });
       },
