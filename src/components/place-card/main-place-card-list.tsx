@@ -8,7 +8,7 @@ import Loader from '../loader/loader';
 type Props = {
   cityName: string;
   offers?: OfferShortModel[];
-  onChangeActiveOfferId: (offerId: string | undefined) => void;
+  onChangeActiveOfferId?: (offerId: string | undefined) => void;
 };
 
 const SORTERS: Record<OfferSortOption, ((offers: OfferShortModel[]) => OfferShortModel[])> = {
@@ -41,8 +41,8 @@ export default function MainPlaceCardList({ cityName, offers, onChangeActiveOffe
                 variant='city'
                 key={c.id}
                 model={c}
-                onMouseEnter={() => onChangeActiveOfferId(c.id)}
-                onMouseLeave={() => onChangeActiveOfferId(undefined)}
+                onMouseEnter={() => onChangeActiveOfferId?.(c.id)}
+                onMouseLeave={() => onChangeActiveOfferId?.(undefined)}
               />
             ))}
           </div>
