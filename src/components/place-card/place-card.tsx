@@ -6,7 +6,7 @@ import { useAppDispatch } from '../../hooks/use-app-dispatch';
 import { fetchUpdateFavoriteOffer } from '../../store/offers/offers';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { AuthorizationStatus } from '../../models/authorization-status';
-import { getAuthStatus } from '../../store/auth';
+import { getAuthStatus } from '../../store/auth/auth';
 
 type Props = {
   variant: 'city' | 'favorite' | 'nearby';

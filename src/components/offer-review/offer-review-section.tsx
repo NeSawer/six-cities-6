@@ -9,7 +9,7 @@ import Loader from '../loader/loader';
 import { useAppSelector } from '../../hooks/use-app-selector';
 import { AuthorizationStatus } from '../../models/authorization-status';
 import { ApiRoute } from '../../configuration/api-route';
-import { getAuthStatus } from '../../store/auth';
+import { getAuthStatus } from '../../store/auth/auth';
 
 type Props = {
   offerId: string;

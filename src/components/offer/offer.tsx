@@ -14,7 +14,7 @@ import { useAppSelector } from '../../hooks/use-app-selector';
 import { AuthorizationStatus } from '../../models/authorization-status';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../configuration/app-route';
-import { getAuthStatus } from '../../store/auth';
+import { getAuthStatus } from '../../store/auth/auth';
 
 type Props = {
   offer: OfferModel;

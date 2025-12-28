@@ -1,14 +1,14 @@
 import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { AuthorizationStatus } from '../models/authorization-status';
-import { UserModel } from '../models/user-model';
-import { Namespace } from './namespace';
-import handleRequest from '../tools/handle-request';
-import { dropToken, saveToken } from '../services/token';
-import { RegistrationRequest } from '../models/registration-request';
+import { AuthorizationStatus } from '../../models/authorization-status';
+import { UserModel } from '../../models/user-model';
+import { Namespace } from '../namespace';
+import handleRequest from '../../tools/handle-request';
+import { dropToken, saveToken } from '../../services/token';
+import { RegistrationRequest } from '../../models/registration-request';
 import { AxiosInstance } from 'axios';
-import { fetchFavoriteOffers } from './offers/offers';
-import { ApiRoute } from '../configuration/api-route';
-import { State } from '.';
+import { fetchFavoriteOffers } from '../offers/offers';
+import { ApiRoute } from '../../configuration/api-route';
+import { State } from '..';
 
 export type AuthState = {
   authStatus: AuthorizationStatus;

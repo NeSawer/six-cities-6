@@ -1,4 +1,4 @@
-import { system, name, datatype } from 'faker';
+import { system, name, datatype, internet } from 'faker';
 import { OfferModel } from '../models/offer-model';
 import { OfferShortModel } from '../models/offer-short-model';
 import cities from '../mocks/cities';
@@ -7,6 +7,15 @@ import { Namespace } from '../store/namespace';
 import { AuthorizationStatus } from '../models/authorization-status';
 import { Action, ThunkDispatch } from '@reduxjs/toolkit';
 import { createAppApi } from '../api/api';
+import { UserModel } from '../models/user-model';
+
+export const makeFakeUser = (): UserModel => ({
+  name: name.firstName(),
+  avatarUrl: system.filePath(),
+  isPro: datatype.boolean(),
+  email: internet.email(),
+  token: datatype.string(20)
+});
 
 export const makeFakeOffer = (isFavorite?: boolean): OfferModel & OfferShortModel => ({
   id: datatype.uuid(),
